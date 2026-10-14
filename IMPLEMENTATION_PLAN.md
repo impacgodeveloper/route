@@ -113,3 +113,18 @@ Gap analysis and conflict resolutions: `GAP_ANALYSIS_V2.md`. Domain API: `V2_DOM
 New hard constraints (never overridden by weights or preferences): guard availability, driver
 licence validity, vehicle/driver/company active, contract coverage and hard car limit,
 fleet-company allocation windows, deadline = min(required arrival, shift start, employer max).
+
+# v3 — Client MoM increment
+
+| Stage | Scope | Status |
+| --- | --- | --- |
+| 1 Domain & migration | fleet policy, alcohol tests, geofences, vehicle events/telematics, parking planner, SOS escalation, analytics & carbon, dynamic matching; schema v3 migration + fixtures | ✅ `test/unit/v3_domain_test.dart` |
+| 2 Alcohol & parking | driver breathalyzer step + start blockers; FM safety page; parking optimizer | ✅ |
+| 3 Telematics | live speed/GPS banners, events, geofence CRUD + map, diagnostics | ✅ |
+| 4 SOS chain | in-app escalation, auto support ticket, acknowledgement | ✅ |
+| 5 Analytics & carbon | employer analytics page, CSV, disclaimer | ✅ |
+| 6 Dynamic booking | absences, ad-hoc instant match, released seats | ✅ |
+| 7 Per-employee demo password | employer toggle on employee detail | ✅ |
+| 8 Verification | analyze, 356+ tests, screenshots (all four apps), web build, Android build | see README |
+
+Rules: failed alcohol test → incident + trips "needs attention"; latest test of the day must pass; SOS police/phone/SMS never contacted automatically; carbon credits indicative only.

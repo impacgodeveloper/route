@@ -152,4 +152,29 @@ void main() {
     await _go(t, '/driver/profile');
     await snap(t, 'driver_v2_profile_licence');
   });
+
+  testWidgets('driver v3: alcohol test, blocked, activity', (t) async {
+    final s = await _signed(t);
+    await s.driverOps.checkIn('DR1');
+    await s.alcohol.record(driverId: 'DR1', readingMg: null);
+    await _go(t, '/driver/home');
+    await snap(t, 'driver_v3_home_alcohol_retest');
+    await _go(t, '/driver/alcohol');
+    await snap(t, 'driver_v3_alcohol');
+    await s.alcohol.record(driverId: 'DR1', readingMg: 25);
+    await _go(t, '/driver/alcohol');
+    await snap(t, 'driver_v3_alcohol_failed');
+    await _go(t, '/driver/home');
+    await snap(t, 'driver_v3_home_blocked');
+    await _go(t, '/driver/activity');
+    await snap(t, 'driver_v3_activity');
+  });
+
+  testWidgets('driver v3: speed warning + shift summary', (t) async {
+    await _started(t);
+    await _go(t, '/driver/trip/TR-1001/active');
+    await snap(t, 'driver_v3_active_speed');
+    await _go(t, '/driver/shift-summary');
+    await snap(t, 'driver_v3_shift_summary');
+  });
 }

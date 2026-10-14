@@ -187,3 +187,24 @@ fields and fixtures are only filled where missing — user edits and IDs are pre
 
 v2 tests: `test/unit/v2_domain_test.dart`, `test/integration/v2_workflows_test.dart`
 (workflows A–G + end-to-end smoke path).
+
+---
+
+## v3 — Client MoM increment (safety, telematics, analytics, dynamic booking)
+
+| # | Feature | Where |
+| --- | --- | --- |
+| 1 | **Alcohol monitoring** — simulated breathalyzer + supervisor entry; a failed/inconclusive latest test blocks trip start and raises a safety incident; Fleet Manager clears the block, retest still required. Policy (on/off, threshold, check point) editable. | Driver `/driver/alcohol`, Fleet `/fleet/safety` |
+| 1 | **Parking optimisation** — nearest parking to each vehicle's next first pickup within capacity; review and apply, drivers notified, audited. | Fleet `/fleet/parking` |
+| 2 | **Speed / GPS / geofence / diagnostics** (simulated from trip progress) — live speed vs limit, "Slow down" / "Off planned route" banners, events (acknowledge / raise incident), geofence CRUD + map, DTC scan, demo simulation panel. | Driver active trip, Fleet `/fleet/telematics` |
+| 3 | **SOS escalation chain** — FM, company admin, support (auto safety ticket) and driver alerted in-app; police and personal contacts are shown as "Not contacted — integration required". | Employee/Driver after SOS, Employer overview, Fleet `/fleet/safety?tab=sos` |
+| 4 | **Analytics & indicative carbon credits** — KPIs, per-trip table, CSV export, disclaimer (not certified by Verra / Gold Standard). | Employer `/employer/analytics` |
+| 5 | **Dynamic booking / roster** — "I'm not travelling", ad-hoc instant match (policy `autoMatchAdhoc`, max detour 25 min), released seats, absent riders greyed in driver manifest. | Employee, Driver, Employer, Fleet dispatch |
+
+Decisions: alcohol monitoring is ON by default (seeded passing tests for DR1–DR3); analytics baseline is a solo ICE direct ride (editable in fleet policy).
+**Employee passwords:** employer admins can switch on a *personal demo password* per employee (Employee detail → "Require personal demo password"); those employees must enter it at sign-in. Demo only, not real authentication.
+
+Still simulated / out of scope: breathalyzer hardware, GPS/OBD telematics, police 112 / phone / SMS, certified carbon credits.
+
+Tests: `test/unit/v3_domain_test.dart`, `test/widget/*/*_v3_*test.dart`; golden screenshots via `flutter test --tags screenshot --update-goldens` (images in `test/screenshots/out`).
+API reference: `V2_DOMAIN_API.md` (v3 section).

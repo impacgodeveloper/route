@@ -32,18 +32,16 @@ Fixes made in this pass:
 - `fleet_v3_telematics_test` assertions corrected (speed shown on card + map; clear the right DTC row).
 - v3 routes added to `test/widget/route_crawler_test.dart`.
 
-## Pending (not started / unfinished — do later)
+## Pending — status (2026-10-14)
 
-1. **Screenshots for v3**: Driver and Fleet screenshot tests (`test/screenshots/driver_screens_test.dart`, `fleet_screens_test.dart`) do not yet include alcohol, telematics, safety or parking-optimizer screens. Employee/Employer were updated. Run with `flutter test --tags screenshot` and review images in `test/screenshots/out`.
-2. **Per-app visual review** of the new v3 screens on a real browser/phone (tests pass, but no human-eye review of layout polish yet).
-3. **Docs**: add a v3 section to `README.md` and `IMPLEMENTATION_PLAN.md` (`V2_DOMAIN_API.md` already has the v3 API).
-4. **Android build** (`flutter build apk`) and **on-device integration test** (`integration_test/app_test.dart`) not run.
-5. **Optional employee individual password policy** — today employees still pick their ID on the role sign-in (E4 has a password). Decide if every employee needs a personal password.
-6. **Real integrations (out of scope for the prototype, clearly labelled in UI)**:
-   - Breathalyzer device (currently simulated scenarios + supervisor entry).
-   - GPS / OBD telematics (simulated from trip progress).
-   - Police 112 / phone calls / SMS for SOS (shown as "Not contacted — integration required").
-   - Carbon credits are indicative only — require eligibility, verified measurement and certification (Verra / Gold Standard).
+1. ✅ Screenshots for v3 — driver (alcohol, retest, failed/blocked, activity, speed, summary) and fleet (safety ×3 tabs, telematics ×4 tabs, phone views) added; regenerate with `flutter test --tags screenshot --update-goldens`.
+2. ✅ Visual review (via screenshots) — fixed jammed Speed/Position columns in the telematics table and truncated Method column in the alcohol log. A final check on a real phone/browser is still yours to do.
+3. ✅ Docs — v3 sections added to `README.md` and `IMPLEMENTATION_PLAN.md`.
+4. ◐ `flutter build apk --debug` succeeds. On-device `integration_test/app_test.dart` not run: no Android device/emulator connected.
+5. ✅ Employee password policy — employer admin toggle "Require personal demo password" on Employee detail (tested).
+6. Real integrations remain out of scope and labelled in the UI.
+
+Health: `flutter analyze` clean · 357 tests pass · web release build OK · debug APK OK.
 
 ## Decisions taken (keep in mind)
 

@@ -54,6 +54,7 @@ class _EmployeeDetailPageState extends ConsumerState<EmployeeDetailPage> {
   TransportPreference _pref = TransportPreference.noPreference;
   SelfDeclaredGender _gender = SelfDeclaredGender.notSpecified;
   bool _guard = false;
+  bool _password = false;
   bool _loaded = false;
   bool _busy = false;
   bool _attempted = false;
@@ -111,6 +112,7 @@ class _EmployeeDetailPageState extends ConsumerState<EmployeeDetailPage> {
     _pref = e.transportPreference;
     _gender = e.gender;
     _guard = e.guardEscortRequired;
+    _password = e.optionalDemoPasswordEnabled;
   }
 
   /// Parsed tolerance: null = company default; throws FormatException text.
@@ -144,7 +146,7 @@ class _EmployeeDetailPageState extends ConsumerState<EmployeeDetailPage> {
         shiftLabel: shiftLabel,
         transportPreference: _pref,
         status: RecordStatus.active,
-        optionalDemoPasswordEnabled: false,
+        optionalDemoPasswordEnabled: _password,
         guardEscortRequired: _guard,
         notes: _notes.text.trim(),
         shiftStartMinutes: _shiftStart,
@@ -163,6 +165,7 @@ class _EmployeeDetailPageState extends ConsumerState<EmployeeDetailPage> {
       shiftLabel: shiftLabel,
       transportPreference: _pref,
       guardEscortRequired: _guard,
+      optionalDemoPasswordEnabled: _password,
       notes: _notes.text.trim(),
       shiftStartMinutes: () => _shiftStart,
       shiftEndMinutes: () => _shiftEnd,
@@ -613,6 +616,15 @@ class _EmployeeDetailPageState extends ConsumerState<EmployeeDetailPage> {
               employer.securityGuardPolicyEnabled
                   ? 'Explicit admin setting. Reserves a guard seat on this employee\'s trips.'
                   : 'Explicit admin setting. Only applied when the company guard policy is enabled (currently off).',
+            ),
+          ),
+          SwitchListTile(
+            contentPadding: EdgeInsets.zero,
+            value: _password,
+            onChanged: (v) => setState(() => _password = v),
+            title: const Text('Require personal demo password'),
+            subtitle: const Text(
+              'When on, this employee must enter the demo password to sign in. Demo only — not real authentication.',
             ),
           ),
           TextFormField(

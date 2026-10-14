@@ -200,8 +200,8 @@ class _SafetyAlcoholTabState extends ConsumerState<SafetyAlcoholTab> {
             TableCol(
               'Method',
               (a) =>
-                  Text(a.method, maxLines: 1, overflow: TextOverflow.ellipsis),
-              flex: 2,
+                  Text(a.method, maxLines: 2, overflow: TextOverflow.ellipsis),
+              flex: 3,
             ),
             TableCol('Trip', (a) => Text(a.tripId ?? '—'), flex: 2),
             TableCol(

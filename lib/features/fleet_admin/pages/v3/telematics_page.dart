@@ -150,7 +150,6 @@ class _LiveView extends ConsumerWidget {
             ),
           ),
           flex: 2,
-          numeric: true,
         ),
         TableCol(
           'Position',

@@ -196,4 +196,33 @@ void main() {
       }
     });
   }
+
+  testWidgets('employer can require a personal demo password for an employee', (
+    tester,
+  ) async {
+    await pumpEmployer(
+      tester,
+      location: '/employer/employees/E1',
+      size: const Size(1440, 1400),
+    );
+    final sw = find.widgetWithText(
+      SwitchListTile,
+      'Require personal demo password',
+    );
+    await tester.ensureVisible(sw);
+    await tester.pumpAndSettle();
+    await tester.tap(sw);
+    await tester.pumpAndSettle();
+    final save = find.text('Save changes');
+    await tester.ensureVisible(save.first);
+    await tester.tap(save.first);
+    await tester.pumpAndSettle();
+    final s = servicesOf(tester);
+    expect(dataOf(tester).employee('E1')!.optionalDemoPasswordEnabled, isTrue);
+    expect((await s.session.signInEmployee('E1')).isOk, isFalse);
+    expect(
+      (await s.session.signInEmployee('E1', password: 'demo1234')).isOk,
+      isTrue,
+    );
+  });
 }

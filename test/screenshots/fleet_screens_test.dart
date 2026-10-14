@@ -19,6 +19,13 @@ void main() {
     'pooling': '/fleet/pooling',
     'vehicle_edit': '/fleet/vehicles/C3',
     'parking': '/fleet/parking',
+    'safety': '/fleet/safety',
+    'safety_alcohol': '/fleet/safety?tab=alcohol',
+    'safety_sos': '/fleet/safety?tab=sos',
+    'telematics': '/fleet/telematics',
+    'telematics_events': '/fleet/telematics?tab=events',
+    'telematics_geofences': '/fleet/telematics?tab=geofences',
+    'telematics_simulate': '/fleet/telematics?tab=simulate',
     'monitoring': '/fleet/monitoring',
     'reports': '/fleet/reports',
     'mapping': '/fleet/mapping',
@@ -38,6 +45,8 @@ void main() {
     'optimization': '/fleet/optimization',
     'mapping': '/fleet/mapping',
     'traffic': '/fleet/traffic',
+    'safety': '/fleet/safety',
+    'telematics': '/fleet/telematics',
   }.entries) {
     testWidgets('fleet ${e.key} phone', (t) async {
       await pumpApp(t, location: e.value, size: phoneSize);
